@@ -123,6 +123,7 @@ void loop()
      send(msg.set(volts,2));
      send(msg3.set(myTemp,2));
      send(msg2.set(percentage));
+	 //send(msg4.set(percentage));
 #endif
      
 //    if (digitalRead(BOOL_PIN) ){
@@ -133,7 +134,7 @@ void loop()
        
     Serial.print("\n");
 
-	digitalWrite(CO_VCC, LOW);
+	//digitalWrite(CO_VCC, LOW);
     delay(120000);
 }
  
