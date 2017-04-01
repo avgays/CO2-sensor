@@ -49,11 +49,13 @@ float           CO2Curve[3]  =  {2.602,ZERO_POINT_VOLTAGE,(REACTION_VOLTGAE/(2.6
 
 #define CHILD_ID 1   // Id of the sensor child
 #define CHILD_ID_MQ 2   // Id of the sensor child
+#define CHILD_ID_MQ2 4   // Id of the sensor child
 #define CHILD_ID_TEMP 3
 #ifdef MY_SENSORS
 MyMessage msg(CHILD_ID, V_VOLTAGE);
 MyMessage msg2(CHILD_ID_MQ, V_LEVEL);
 MyMessage msg3(CHILD_ID_TEMP, V_VOLTAGE);
+MyMessage msg4(CHILD_ID_MQ2, V_LEVEL);
 #endif
 
 void presentation() {
@@ -61,6 +63,7 @@ void presentation() {
 	sendSketchInfo("CO2", "1.5");
 	present(CHILD_ID, S_MULTIMETER);
 	present(CHILD_ID_MQ, S_AIR_QUALITY);
+	present(CHILD_ID_MQ2, S_AIR_QUALITY);
 	present(CHILD_ID_TEMP, S_MULTIMETER);
 #endif
 #ifdef MY_DEBUG
@@ -89,6 +92,7 @@ void setup()
 void loop()
 {
     int percentage;
+	int percentage2;
     float volts;
     float myTemp;
 
@@ -104,6 +108,7 @@ void loop()
   
     volts = MGRead(MG_PIN);
 	percentage = MGGetPercentage(volts, CO2Curve);
+	percentage2 = MGGetPercentage2(volts);
 #ifdef MY_DEBUG
 	Serial.print( "SEN0159:" );
     Serial.print(volts); 
@@ -114,7 +119,10 @@ void loop()
     } else {
         Serial.print(percentage);
     }
-    Serial.print( "ppm" );  
+    Serial.print( "ppm" );
+	Serial.print("       ");
+	Serial.print(percentage2);
+	Serial.print("ppm");
     Serial.print( "       Time point:" );
     Serial.print(millis());
     Serial.print("\n");
@@ -123,7 +131,7 @@ void loop()
      send(msg.set(volts,2));
      send(msg3.set(myTemp,2));
      send(msg2.set(percentage));
-	 //send(msg4.set(percentage));
+	 send(msg4.set(percentage2));
 #endif
      
 //    if (digitalRead(BOOL_PIN) ){
@@ -181,4 +189,11 @@ int  MGGetPercentage(float volts, float *pcurve)
 //  return co2ppm;
   
    
+}
+
+int  MGGetPercentage2(float voltage)
+{
+	float power = ((voltage - v400ppm) / A) + B;
+	float co2ppm = pow(10, power);
+	return (int)co2ppm;
 }
