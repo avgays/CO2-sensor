@@ -14,6 +14,8 @@ C:\Users\avgays\AppData\Local\Temp\VMBuilds\CO2-sensor\nano_atmega328\Release\CO
  C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\variants\eightanaloginputs/../standard/pins_arduino.h \
  C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\libraries\SPI\src/SPI.h \
  C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Arduino.h \
+ C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\libraries\Wire\src/Wire.h \
+ C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Stream.h \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/MySensors.h \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/MySensorsCore.h \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/Version.h \
@@ -44,6 +46,4 @@ C:\Users\avgays\AppData\Local\Temp\VMBuilds\CO2-sensor\nano_atmega328\Release\CO
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/MyCapabilities.h \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/MyMessage.cpp \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/MySensorsCore.cpp \
- C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/MyMainDefault.cpp \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\libraries\Wire\src/Wire.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Stream.h
+ C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/MyMainDefault.cpp
