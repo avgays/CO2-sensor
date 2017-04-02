@@ -1,21 +1,21 @@
 C:\Users\avgays\AppData\Local\Temp\VMBuilds\CO2-sensor\nano_atmega328\Release\CO2-sensor.cpp.o: \
  C:\Users\avgays\AppData\Local\Temp\VMBuilds\CO2-sensor\nano_atmega328\Release\CO2-sensor.cpp \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/arduino.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/binary.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/WCharacter.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/WString.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/HardwareSerial.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Stream.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Print.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Printable.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/USBAPI.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Arduino.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\variants\eightanaloginputs/pins_arduino.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\variants\eightanaloginputs/../standard/pins_arduino.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\libraries\SPI\src/SPI.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Arduino.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\libraries\Wire\src/Wire.h \
- C:\Users\avgays\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.17\cores\arduino/Stream.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/arduino.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/binary.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/WCharacter.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/WString.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/HardwareSerial.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Stream.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Print.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Printable.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs/pins_arduino.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs/../standard/pins_arduino.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\libraries\SPI\src/SPI.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src/Wire.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Stream.h \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/MySensors.h \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/MySensorsCore.h \
  C:\Users\avgays\Documents\Arduino\libraries\MySensors/core/Version.h \
