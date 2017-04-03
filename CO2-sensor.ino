@@ -10,6 +10,10 @@
 #include <MySensors.h>
 #endif
  
+
+
+
+
 /************************Hardware Related Macros************************************/
 #define         MG_PIN                       A0     //define which analog input channel you are going to use
 //#define         BOOL_PIN                     (4)
@@ -68,12 +72,21 @@ unsigned long SLEEP_TIME;
 
 void presentation() {
 #ifdef MY_SENSORS
+	String myVals;
+	v400ppm = (float)loadState(1) / 100;
+	v40000ppm = (float)loadState(2) / 100;
+	deltavs = v400ppm - v40000ppm;
+	A = deltavs / (log10(400) - log10(40000));
+	SLEEP_TIME = (unsigned long)(loadState(7)) * 10000;
+	myVals = "0:" + String(v400ppm,2) + ":" + String(v40000ppm,2) + ":0:" + SLEEP_TIME;
 	sendSketchInfo("CO2 sensor", "1.5");
 	present(CHILD_ID, S_MULTIMETER, "Volts");
 	present(CHILD_ID_MQ, S_AIR_QUALITY,"PPM-400/1000");
 	present(CHILD_ID_MQ2, S_AIR_QUALITY,"PPM-400/10 000");
 	present(CHILD_ID_TEMP, S_MULTIMETER, "Temp-comp");
-	present(CHILD_ID_DIAGNOSTIC, S_CUSTOM, "Diagnostic");
+	//present(CHILD_ID_DIAGNOSTIC, S_CUSTOM, "Diagnostic");
+	present(CHILD_ID_DIAGNOSTIC, S_CUSTOM, myVals.c_str());
+	
 #endif
 #ifdef MY_DEBUG
 	Serial.print("MG-811 Demostration\n");
@@ -82,11 +95,7 @@ void presentation() {
 
 void setup()
 {
-	v400ppm = (float)loadState(1)/100;
-	v40000ppm= (float)loadState(2)/100;
-	deltavs = v400ppm - v40000ppm;
-	A = deltavs / (log10(400) - log10(40000));
-	SLEEP_TIME = (unsigned long)(loadState(7)) * 10000;
+
 
 	analogReference(EXTERNAL);
 	pinMode(CO_VCC, OUTPUT);
