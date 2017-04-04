@@ -136,7 +136,7 @@ void loop()
 
     //myTemp=analogRead(T_COMP) * 2.5 / 1024;
 
-#ifdef MY_DEBUG
+#ifdef MY_DEB        UG
 //    Serial.print( "Tcomp:" );
 //    Serial.println(myTemp); 
 #endif
