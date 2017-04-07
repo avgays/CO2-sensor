@@ -1,6 +1,7 @@
 #define MY_SENSORS
 //#define MY_DEBUG
 #define MY_RADIO_NRF24
+#define MY_OTA_FIRMWARE_FEATURE
 
 #include <SPI.h>
 #include <Wire.h> 
@@ -31,6 +32,7 @@
 #define CHILD_ID_DIAGNOSTIC 254
 #define CHILD_ID 1   // Id of the sensor child
 #define CHILD_ID_MQ 2   // Id of the sensor child
+#define CHILD_ID_VCC 4   // Id of the sensor on/of switch
 //#define CHILD_ID_TEMP 3
 
 
@@ -38,6 +40,7 @@
 MyMessage msg(CHILD_ID, V_VOLTAGE);
 MyMessage msg2(CHILD_ID_MQ, V_LEVEL);
 //MyMessage msg3(CHILD_ID_TEMP, V_VOLTAGE);
+MyMessage msg4(CHILD_ID_VCC, V_STATUS);
 MyMessage msgDiagnostic(CHILD_ID_DIAGNOSTIC, V_CUSTOM);
 #endif
 
@@ -48,15 +51,19 @@ void presentation() {
 	String myVals;
 	v400ppm = (float)((int)loadState(2)*256 + loadState(1)) / 1000;
 	v40000ppm = (float)((int)loadState(4) * 256 + loadState(3)) / 1000;
+	sendVolts = (bool)loadState(8);
+	
 
 	deltavs = v400ppm - v40000ppm;
 	A = deltavs / (log10(400) - log10(40000));
 	SLEEP_TIME = (unsigned long)(loadState(7)) * 10000;
-	myVals = "0:" + String(v400ppm,2) + ":" + String(v40000ppm,2) + ":0:" + SLEEP_TIME;
+	myVals = "0:" + String(v400ppm,3) + ":" + String(v40000ppm,3) + ":0:" + SLEEP_TIME + ":" + sendVolts;
 	sendSketchInfo("CO2 sensor", "1.5");
 	present(CHILD_ID, S_MULTIMETER, "Volts");
 	present(CHILD_ID_MQ, S_AIR_QUALITY,"CO2 PPM");
 	//present(CHILD_ID_TEMP, S_MULTIMETER, "Temp-comp");
+	present(CHILD_ID_VCC, S_BINARY, "Heater on/off");
+	
 	present(CHILD_ID_DIAGNOSTIC, S_CUSTOM, myVals.c_str());
 #endif
 #ifdef MY_DEBUG
@@ -81,6 +88,9 @@ void setup()
 	Serial.println("V");
 	Serial.print("SLEEP_TIME: ");
 	Serial.println(SLEEP_TIME);
+	Serial.print("SendVolts: ");
+	Serial.println(sendVolts);
+
 	Serial.println("----------------------------");
 #endif
 //    pinMode(BOOL_PIN, INPUT);                        //set pin to input
@@ -114,8 +124,10 @@ void loop()
     Serial.print("\n");
 #endif
 #ifdef MY_SENSORS
-     send(msg.set(volts,2));
-	 send(msg2.set(percentage));
+	if (sendVolts) {
+		send(msg.set(volts, 3));
+	}
+	send(msg2.set(percentage));
      //send(msg3.set(myTemp,2));
 
 
@@ -158,29 +170,25 @@ long MGGetPercentage(float voltage) {
 }
 
 void receive(const MyMessage &message) {
-	float myCor = message.getFloat();
-	int myCor2;
-	int newsleep;
+	int myCor = message.getInt();
 
 	switch (message.type) {
-	case V_VAR1: //v400ppm
-		v400ppm = myCor;
-		myCor2 = (int)(myCor * 1000);
-		saveState(1, (byte)(myCor2 & 0xFF));
-		saveState(2, (byte)((myCor2 >> 8) & 0xFF));
-		send(msgDiagnostic.set(myCor, 2));
+	case V_VAR1: //v400ppm in mV, eg 1547 !
+		v400ppm = myCor/1000;
+		saveState(1, (byte)(myCor & 0xFF));
+		saveState(2, (byte)((myCor >> 8) & 0xFF));
+		send(msgDiagnostic.set(myCor));
 		#ifdef MY_DEBUG
 		Serial.print("v400ppm: ");
 		Serial.println(myCor);
 		#endif
 		break;
 
-	case V_VAR2: //v10000ppm
-		v40000ppm = myCor;
-		myCor2 = (int)(myCor * 1000);
-		saveState(3, (byte)(myCor2 & 0xFF));
-		saveState(4, (byte)((myCor2 >> 8) & 0xFF));
-		send(msgDiagnostic.set(myCor, 2));
+	case V_VAR2: //v10000ppm in mV, eg 940 !
+		v40000ppm = myCor/1000;
+		saveState(3, (byte)(myCor & 0xFF));
+		saveState(4, (byte)((myCor >> 8) & 0xFF));
+		send(msgDiagnostic.set(myCor));
 		#ifdef MY_DEBUG
 		Serial.print("v10000ppm ");
 		Serial.println(myCor);
@@ -188,9 +196,8 @@ void receive(const MyMessage &message) {
 		break;
 
 	case V_VAR4: //V_VAR4 * 10000 - SLEEP_TIME, mls
-		newsleep = message.getInt();
-		SLEEP_TIME = (unsigned long)newsleep * 1000;
-		saveState(7, (int)(newsleep / 10));
+		SLEEP_TIME = (unsigned long)myCor * 1000;
+		saveState(7, (int)(myCor / 10));
 		send(msgDiagnostic.set((uint32_t)SLEEP_TIME));
 		#ifdef MY_DEBUG
 		Serial.print("SLEEP_TIME ");
@@ -207,6 +214,14 @@ void receive(const MyMessage &message) {
 		Serial.println(sendVolts);
 		#endif
 		break;
+	case V_STATUS: //Heater on/off
+		digitalWrite(CO_VCC, message.getBool() ? HIGH : LOW);
+		send(msg4.set((message.getBool())?"ON":"OFF"));
+#ifdef MY_DEBUG
+		Serial.print("sendVolts ");
+		Serial.println(sendVolts);
+#endif
+		break;
 	default:
 		break;
 	}
@@ -218,6 +233,7 @@ void receive(const MyMessage &message) {
 	Serial.print(message.type);
 	Serial.print(" Value ");
 	Serial.println(myCor);
+	Serial.println(message.getInt());
 	Serial.println("----------------------------");
 #endif
 }
